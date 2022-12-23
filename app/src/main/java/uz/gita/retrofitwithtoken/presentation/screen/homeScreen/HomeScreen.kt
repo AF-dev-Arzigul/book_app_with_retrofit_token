@@ -1,9 +1,7 @@
 package uz.gita.retrofitwithtoken.presentation.screen.homeScreen
 
-import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -14,9 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import uz.gita.retrofitwithtoken.R
-import uz.gita.retrofitwithtoken.data.source.local.shp.LocalStorage
 import uz.gita.retrofitwithtoken.data.source.remote.dto.request.BookRequest
-import uz.gita.retrofitwithtoken.data.source.remote.service.BookApi
 import uz.gita.retrofitwithtoken.databinding.ScreenHomeBinding
 import uz.gita.retrofitwithtoken.presentation.adapter.HomeAdapter
 import uz.gita.retrofitwithtoken.presentation.viewModel.HomeViewModelImpl
@@ -26,6 +22,7 @@ class HomeScreen : Fragment(R.layout.screen_home) {
     private val binding: ScreenHomeBinding by viewBinding(ScreenHomeBinding::bind)
     private val viewModel: HomeViewModel by viewModels<HomeViewModelImpl>()
     private val adapter by lazy { HomeAdapter() }
+    private var reloadFavouritesListener: (() -> Unit)? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
@@ -39,6 +36,8 @@ class HomeScreen : Fragment(R.layout.screen_home) {
 
         viewModel.failureFlow.onEach {
         }.launchIn(lifecycleScope)
+
+        viewModel.changeFavStatusFlow.onEach { reloadFavouritesListener?.invoke() }.launchIn(lifecycleScope)
 
         adapter.setOnItemDeleteClickOnListener {
 
@@ -58,7 +57,9 @@ class HomeScreen : Fragment(R.layout.screen_home) {
             dialog.create()
 
         }
-
     }
 
+    fun setReloadFavouritesListener(block: () -> Unit) {
+        reloadFavouritesListener = block
+    }
 }

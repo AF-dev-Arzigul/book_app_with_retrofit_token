@@ -10,6 +10,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import uz.gita.retrofitwithtoken.R
 import uz.gita.retrofitwithtoken.databinding.ScreenBaseBinding
 import uz.gita.retrofitwithtoken.presentation.adapter.MainPagerAdapter
+import uz.gita.retrofitwithtoken.presentation.screen.booksScreen.BooksScreen
+import uz.gita.retrofitwithtoken.presentation.screen.favScreen.FavouriteScreen
+import uz.gita.retrofitwithtoken.presentation.screen.homeScreen.HomeScreen
 import uz.gita.retrofitwithtoken.presentation.screen.homeScreen.HomeViewModel
 import uz.gita.retrofitwithtoken.presentation.viewModel.HomeViewModelImpl
 
@@ -25,7 +28,13 @@ class BaseScreen : Fragment(R.layout.screen_base) {
     private val viewModel: HomeViewModel by viewModels<HomeViewModelImpl>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.pager.adapter = MainPagerAdapter(requireActivity())
+        val homeScreen = HomeScreen()
+        val booksScreen = BooksScreen()
+        val favouriteScreen = FavouriteScreen()
+
+        homeScreen.setReloadFavouritesListener { favouriteScreen.reloadData() }
+
+        binding.pager.adapter = MainPagerAdapter(childFragmentManager, lifecycle, homeScreen, booksScreen, favouriteScreen)
         binding.pager.isUserInputEnabled = false
 
         binding.bottomNavBarMain.setOnItemSelectedListener {

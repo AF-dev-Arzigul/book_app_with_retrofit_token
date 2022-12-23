@@ -1,7 +1,6 @@
 package uz.gita.retrofitwithtoken.presentation.screen.favScreen
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -21,15 +20,15 @@ import uz.gita.retrofitwithtoken.presentation.viewModel.HomeViewModelImpl
  * 12/20/2022, Tuesday, 4:43 PM
 */
 
-
 @AndroidEntryPoint
 class FavouriteScreen : Fragment(R.layout.screen_fav) {
     private val binding: ScreenFavBinding by viewBinding(ScreenFavBinding::bind)
     private val viewModel: HomeViewModel by viewModels<HomeViewModelImpl>()
     private val adapter by lazy { HomeAdapter() }
+    private var isCreated = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
+        isCreated = true
         binding.recyclerView.adapter = adapter
 
         viewModel.getFavBooks()
@@ -40,4 +39,8 @@ class FavouriteScreen : Fragment(R.layout.screen_fav) {
 
     }
 
+    fun reloadData() {
+        if (isCreated) viewModel.getFavBooks()
+    }
 }
+

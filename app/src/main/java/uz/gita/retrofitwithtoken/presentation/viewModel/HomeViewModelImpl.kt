@@ -36,6 +36,7 @@ class HomeViewModelImpl @Inject constructor(
     override val favBookList: MutableSharedFlow<List<BookResponse.OwnerBook>> =
         MutableSharedFlow(replay = 1, onBufferOverflow = BufferOverflow.DROP_LATEST)
     override val userList: MutableSharedFlow<List<UserResponse>> = MutableSharedFlow(replay = 1, onBufferOverflow = BufferOverflow.DROP_LATEST)
+    override val changeFavStatusFlow = MutableStateFlow<Unit>(Unit)
 
     init {
         viewModelScope.launch {
@@ -100,6 +101,7 @@ class HomeViewModelImpl @Inject constructor(
                 is ResultData.Success -> {
                     getBooks()
                     getFavBooks()
+                    changeFavStatusFlow.emit(Unit)
 //                    val book = viewModelScope.async { getBooks() }
 //                    val fav = viewModelScope.async { getFavBooks() }
 //                    book.await()

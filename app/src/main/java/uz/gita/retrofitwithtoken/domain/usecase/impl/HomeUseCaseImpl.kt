@@ -37,5 +37,5 @@ class HomeUseCaseImpl @Inject constructor(
     override fun getUsers(): Flow<ResultData<List<UserResponse>>> {
         return repo.getUser()
     }
-
 }
+
