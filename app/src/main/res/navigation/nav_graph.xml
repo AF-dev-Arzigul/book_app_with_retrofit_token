@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/splashScreen">
+
+    <fragment
+        android:id="@+id/splashScreen"
+        android:name="uz.gita.retrofitwithtoken.presentation.screen.splashScreen.SplashScreen"
+        android:label="SplashScreen"
+        tools:layout="@layout/screen_splash">
+        <action
+            android:id="@+id/action_splashScreen_to_loginScreen"
+            app:destination="@id/loginScreen"
+            app:popUpTo="@id/splashScreen"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashScreen_to_baseScreen"
+            app:destination="@id/baseScreen"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpScreen"
+        android:name="uz.gita.retrofitwithtoken.presentation.screen.signUpScreen.SignUpScreen"
+        android:label="SignUpScreen"
+        tools:layout="@layout/screen_signup" >
+        <action
+            android:id="@+id/action_signUpScreen_to_signUpVerifyScreen"
+            app:destination="@id/signUpVerifyScreen"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginScreen"
+        android:name="uz.gita.retrofitwithtoken.presentation.screen.loginScreen.SignInScreen"
+        android:label="LoginScreen"
+        tools:layout="@layout/screen_signin" >
+        <action
+            android:id="@+id/action_loginScreen_to_signUpScreen"
+            app:destination="@id/signUpScreen" />
+        <action
+            android:id="@+id/action_loginScreen_to_loginVerifyScreen"
+            app:destination="@id/loginVerifyScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginVerifyScreen"
+        tools:layout="@layout/screen_signin_verify"
+        android:name="uz.gita.retrofitwithtoken.presentation.screen.loginVerifyScreen.SignInVerifyScreen"
+        android:label="LoginVerifyScreen" >
+        <action
+            android:id="@+id/action_loginVerifyScreen_to_baseScreen"
+            app:destination="@id/baseScreen"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpVerifyScreen"
+        android:name="uz.gita.retrofitwithtoken.presentation.screen.signUpVerifyScreen.SignUpVerifyScreen"
+        android:label="SignUpVerifyScreen"
+        tools:layout="@layout/screen_signup_verify">
+        <action
+            android:id="@+id/action_signUpVerifyScreen_to_baseScreen"
+            app:destination="@id/baseScreen"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/baseScreen"
+        tools:layout="@layout/screen_base"
+        android:name="uz.gita.retrofitwithtoken.presentation.screen.baseScreen.BaseScreen"
+        android:label="BaseScreen" />
+
+</navigation>
